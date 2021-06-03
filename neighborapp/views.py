@@ -45,6 +45,11 @@ class NeighbourhoodDetails(APIView):
         else:
             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    # delete an existing neighbourhood
+    # def delete(self, request, pk, format=None):
+    #     neighbourhood=self.get_neighbourhood(pk)
+    #     neighbourhood.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
 class BusinessList(APIView):
     # get all businesses from the database
@@ -84,6 +89,12 @@ class BusinessDetails(APIView):
         else:
             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    # delete an existing business
+    # def delete(self, request, pk, format=None):
+    #     business=self.get_business(pk)
+    #     business.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+
 class UserList(APIView):  
     # retrieve all users from the database
     def get(self,request,format=None):
@@ -120,4 +131,10 @@ class UserDetails(APIView):
             return Response(serializers.data)
         else:
             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+  
+    # delete an existing user
+    def delete(self, request, pk, format=None):
+        user=self.get_user(pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
