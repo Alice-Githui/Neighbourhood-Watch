@@ -36,19 +36,33 @@ class NeighbourhoodDetails(APIView):
         return Response(serializers.data)
 
 
-
 class BusinessList(APIView):
+    # get all businesses from the database
     def get(self, request,format=None):
         business=Business.objects.all()
         serializers=BusinessSerializers(business, many=True)
         return Response(serializers.data)
 
+    # post a new business to the database
     def post(self, request, format=None):
         serializers=BusinessSerializers(data=request.data)
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data, status=status.HTTP_200_OK)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class BusinessDetails(APIView):
+    # get one business from the database
+    def get_business(self, pk):
+        try:
+            return Business.objects.get(pk=pk)
+        except Business.DoesNotExist:
+            return Http404
+    
+    def get(self,request, pk, format=None):
+        business=self.get_business(pk)
+        serializers=BusinessSerializers(business)
+        return Response(serializers.data)
 
 class UserList(APIView):  
     def get(self,request,format=None):
