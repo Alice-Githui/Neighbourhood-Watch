@@ -74,6 +74,16 @@ class BusinessDetails(APIView):
         serializers=BusinessSerializer(business)
         return Response(serializers.data)
 
+    # update a specific business 
+    def put(self, request, pk, format=None):
+        business=self.get_business(pk)
+        serializers=BusinessSerializer(business, request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class UserList(APIView):  
     # retrieve all users from the database
     def get(self,request,format=None):
