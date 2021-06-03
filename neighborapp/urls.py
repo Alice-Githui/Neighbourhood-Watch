@@ -11,4 +11,5 @@ urlpatterns=[
     path('api/users/<int:pk>/', views.UserDetails.as_view(), name="one-user"),
     path('api/update/neighbours/<int:pk>/', views.NeighbourhoodDetails.as_view(), name="update-neighbourhood"),
     path('api/update/business/<int:pk>/', views.BusinessDetails.as_view(), name="update-business"),
+    path('api/update/users/<int:pk>/', views.UserDetails.as_view(), name="update-user"),
 ]
