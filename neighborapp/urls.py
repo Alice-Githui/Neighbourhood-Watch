@@ -13,6 +13,6 @@ urlpatterns=[
     path('api/update/business/<int:pk>/', views.BusinessDetails.as_view(), name="update-business"),
     path('api/update/users/<int:pk>/', views.UserDetails.as_view(), name="update-user"),
     # path('api/delete/neighbours/<int:pk>/', views.NeighbourhoodDetails.as_view, name="delete-neighbourhood"),
-    # path('api/delete/business/<int:pk>/', views.BusinessDetails.as_view(), name="delete-business"),
+    path('api/delete/business/<int:pk>/', views.BusinessDetails.as_view(), name="delete-business"),
     path('api/delete/user/<int:pk>/', views.UserDetails.as_view(), name="delete-user"),
 ]

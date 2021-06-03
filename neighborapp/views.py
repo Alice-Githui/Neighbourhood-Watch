@@ -90,10 +90,10 @@ class BusinessDetails(APIView):
             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # delete an existing business
-    # def delete(self, request, pk, format=None):
-    #     business=self.get_business(pk)
-    #     business.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, pk, format=None):
+        business=self.get_business(pk)
+        business.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class UserList(APIView):  
     # retrieve all users from the database
