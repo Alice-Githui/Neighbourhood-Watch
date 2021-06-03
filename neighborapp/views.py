@@ -7,18 +7,34 @@ from rest_framework import status
 
 
 # Create your views here.
-class NeighborhoodList(APIView):
+class NeighborhoodList(APIView):    
+    # retrieve all objects in the neighbourhood model
     def get(self,request,format=None):
         neighborhood= Neighbourhood.objects.all()
         serializers=NeighbourhoodSerializer(neighborhood, many=True)
         return Response(serializers.data)
 
+    # post an object to the neighbourhood model
     def post(self, request, format=None):
         serializers=NeighbourhoodSerializers(data=request.data)
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data, status=status.HTTP_200_OK)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class NeighbourhoodDetails(APIView):
+    # get a specific neighbourhood details
+    def get_neighbourhood(self, pk):
+        try:
+            return Neighbourhood.objects.get(pk=pk)
+        except Neighbourhood.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        neighbourhood=self.get_neighbourhood(pk)
+        serializers=NeighbourhoodSerializer(neighbourhood)
+        return Response(serializers.data)
+
 
 
 class BusinessList(APIView):
