@@ -28,7 +28,8 @@ class Registration(APIView):
             }
             return Response(response, status=status.HTTP_201_CREATED)
 
-class NeighborhoodList(APIView):    
+class NeighborhoodList(APIView):
+    serializer_class=NeighbourhoodSerializer    
     # retrieve all objects in the neighbourhood model
     def get(self,request,format=None):
         neighborhood= Neighbourhood.objects.all()
@@ -37,10 +38,19 @@ class NeighborhoodList(APIView):
 
     # post an object to the neighbourhood model
     def post(self, request, format=None):
-        serializers=NeighbourhoodSerializers(data=request.data)
+        serializers=self.serializer_class(data=request.data)
         if serializers.is_valid():
             serializers.save()
-            return Response(serializers.data, status=status.HTTP_200_OK)
+            neighbourhood=serializers.data
+
+            response={
+                "data":{
+                    "new_hood":dict(neighbourhood),
+                    "status":"Success",
+                    "message":"New neighbourhood created successfully"
+                }
+            }
+            return Response(response, status=status.HTTP_200_OK)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class NeighbourhoodDetails(APIView):
