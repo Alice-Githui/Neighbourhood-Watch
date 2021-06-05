@@ -137,36 +137,46 @@ class BusinessDetails(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class UserList(APIView):  
+    serializer_class=ProfileSerializer
     # retrieve all users from the database
     def get(self,request,format=None):
-        users=User.objects.all()
-        serializers=UserSerializer(users, many=True)
+        users=Profile.objects.all()
+        serializers=ProfileSerializer(users, many=True)
         return Response(serializers.data)
     
     # post a new user to the database
     def post(self, request, format=None):
-        serializers=UserSerializer(data=request.data)
+        serializers=self.serializer_class(data=request.data)
         if serializers.is_valid():
             serializers.save()
-            return Response(serializers.data, status=status.HTTP_200_OK)
+            user=serializers.data
+
+            response={
+                "data":{
+                    "user":"user", 
+                    "status":"Success", 
+                    "message": "New User created successfully"
+                }
+            }
+            return Response(response, status=status.HTTP_200_OK)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserDetails(APIView):
     # retrieve a single user from the database
     def get_user(self, pk):
         try:
-            return User.objects.get(pk=pk)
-        except User.DoesNotExist:
+            return Profile.objects.get(pk=pk)
+        except Profile.DoesNotExist:
             return Http404
     
     def get(self, request, pk, format=None):
         users=self.get_user(pk)
-        serializers=UserSerializer(users)
+        serializers=ProfileSerializer(users)
         return Response(serializers.data)
 
     def put(self, request, pk, format=None):
         user=self.get_user(pk)
-        serializers=UserSerializer(user, request.data)
+        serializers=ProfileSerializer(user, request.data)
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data)

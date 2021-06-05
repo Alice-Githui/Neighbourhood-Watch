@@ -26,10 +26,10 @@ class Neighbourhood(models.Model):
         update=cls.objects.filter(id=id).update(name=name)
         return update
 
-class User(models.Model):
+class Profile(models.Model):
     name=models.CharField(max_length=50)
     email=models.EmailField()
-    neighborhood=models.ForeignKey(Neighbourhood, on_delete=models.CASCADE)
+    neighbourhood=models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name
@@ -43,7 +43,7 @@ class User(models.Model):
 
 class Business(models.Model):
   name=models.CharField(max_length=50)
-  user=models.ForeignKey(User,on_delete=models.CASCADE)
+  user=models.ForeignKey(Profile,on_delete=models.CASCADE)
   email=models.EmailField()
   neighbourhood=models.ForeignKey(Neighbourhood,on_delete=models.CASCADE)
 

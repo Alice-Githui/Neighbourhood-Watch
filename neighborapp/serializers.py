@@ -9,14 +9,14 @@ class BusinessSerializer(serializers.ModelSerializer):
         model = Business
         fields='__all__'
 
-class UserSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     business=BusinessSerializer(many=True, read_only=True)
     class Meta:
-        model = User
-        exclude = ['neighborhood']
+        model = Profile
+        exclude = ['neighbourhood']
 
 class NeighbourhoodSerializer(serializers.ModelSerializer):
-    users=UserSerializer(many=True, read_only=True)
+    users=ProfileSerializer(many=True, read_only=True)
     business=BusinessSerializer(many=True, read_only=True)
     class Meta:
         model = Neighbourhood
