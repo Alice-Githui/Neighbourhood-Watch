@@ -4,6 +4,7 @@ from .models import  *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.http import Http404
 
 
 # Create your views here.
@@ -46,10 +47,10 @@ class NeighbourhoodDetails(APIView):
             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # delete an existing neighbourhood
-    # def delete(self, request, pk, format=None):
-    #     neighbourhood=self.get_neighbourhood(pk)
-    #     neighbourhood.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, pk, format=None):
+        neighbour=self.get_neighbourhood(pk)
+        neighbour.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class BusinessList(APIView):
     # get all businesses from the database

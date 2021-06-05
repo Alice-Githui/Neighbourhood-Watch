@@ -1,6 +1,6 @@
 from . import views
 from django.conf import settings
-from django.urls import path, re_path
+from django.urls import path
 
 urlpatterns=[
     path('api/neighbours/', views.NeighborhoodList.as_view(), name="neighbour"),
@@ -12,7 +12,7 @@ urlpatterns=[
     path('api/update/neighbours/<int:pk>/', views.NeighbourhoodDetails.as_view(), name="update-neighbourhood"),
     path('api/update/business/<int:pk>/', views.BusinessDetails.as_view(), name="update-business"),
     path('api/update/users/<int:pk>/', views.UserDetails.as_view(), name="update-user"),
-    # path('api/delete/neighbours/<int:pk>/', views.NeighbourhoodDetails.as_view, name="delete-neighbourhood"),
+    path('api/delete/neighbours/<int:pk>/', views.NeighbourhoodDetails.as_view, name="delete-neighbourhood"),
     path('api/delete/business/<int:pk>/', views.BusinessDetails.as_view(), name="delete-business"),
     path('api/delete/user/<int:pk>/', views.UserDetails.as_view(), name="delete-user"),
 ]
