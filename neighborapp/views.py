@@ -8,6 +8,26 @@ from django.http import Http404
 
 
 # Create your views here.
+class Registration(APIView):
+        serializer_class=RegistrationSerializer
+
+        def post(self, request):
+            serializer=self.serializer_class(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+
+            user_data=serializer.data
+
+            response={
+                "data":{
+                    "user":dict(user_data),
+                    "status":"Success",
+                    "message":"User account created successfully"
+                }
+
+            }
+            return Response(response, status=status.HTTP_201_CREATED)
+
 class NeighborhoodList(APIView):    
     # retrieve all objects in the neighbourhood model
     def get(self,request,format=None):
