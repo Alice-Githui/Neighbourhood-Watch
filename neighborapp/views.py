@@ -83,6 +83,7 @@ class NeighbourhoodDetails(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class BusinessList(APIView):
+    serializer_class=BusinessSerializer
     # get all businesses from the database
     def get(self, request,format=None):
         business=Business.objects.all()
@@ -91,10 +92,19 @@ class BusinessList(APIView):
 
     # post a new business to the database
     def post(self, request, format=None):
-        serializers=BusinessSerializer(data=request.data)
+        serializers=self.serializer_class(data=request.data)
         if serializers.is_valid():
             serializers.save()
-            return Response(serializers.data, status=status.HTTP_200_OK)
+            business=serializers.data
+
+            response={
+                "data":{
+                    "business":dict(business),
+                    "status":"Success", 
+                    "message":"New Business Created Successfully"
+                }
+            }
+            return Response(response, status=status.HTTP_200_OK)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class BusinessDetails(APIView):
