@@ -218,3 +218,28 @@ class UserDetails(APIView):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class PostsList(APIView):
+    serializer_class=PostSerializer
+
+    def get(self,request,format=None):
+        posts=Post.objects.all()
+        serializers=PostSerializer(posts, many=True)
+        return Response(serializers.data)
+    
+    # post a new user to the database
+    def post(self, request, format=None):
+        serializers=self.serializer_class(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            post=serializers.data
+
+            response={
+                "data":{
+                    "post":"post", 
+                    "status":"Success", 
+                    "message": "New Post created successfully"
+                }
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
