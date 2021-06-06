@@ -1,10 +1,13 @@
 from . import views
 from django.conf import settings
 from django.urls import path
+from rest_framework.authtoken.views import ObtainAuthToken
 
 urlpatterns=[
     path('register/', views.Registration.as_view(), name="registeruser"),
-    path('getuser/', views.Registration.as_view(), name="loginuser"),
+    path('getuser/', views.Registration.as_view(), name="getusers"),
+    path('loginuser/', views.LoginUser.as_view(), name="loginuser"),
+    path('authlogin/', ObtainAuthToken.as_view(), name="authlogin"),
     path('api/neighbours/', views.NeighborhoodList.as_view(), name="neighbour"),
     path('api/business/', views.BusinessList.as_view(), name="business"),
     path('api/users/', views.UserList.as_view(), name="users"),

@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 # Create your views here.
@@ -32,6 +34,28 @@ class Registration(APIView):
             users= User.objects.all()
             serializers=RegistrationSerializer(users, many=True)
             return Response(serializers.data)
+
+class LoginUser(APIView):
+    serializer_class=LoginSerializer
+    authentication_classes=(TokenAuthentication,)
+    permission_classes=(IsAuthenticated,)
+
+        # login user
+    def post(self, request, format=None):
+        serializers=self.serializer_class(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            users=serializers.data
+
+            response={
+                "data":{
+                    "new_hood":dict(users),
+                    "status":"Success",
+                    "message":"User logged in successfully"
+                }
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class NeighborhoodList(APIView):
     serializer_class=NeighbourhoodSerializer    
