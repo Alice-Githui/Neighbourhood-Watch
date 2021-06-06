@@ -28,6 +28,11 @@ class Registration(APIView):
             }
             return Response(response, status=status.HTTP_201_CREATED)
 
+        def get(self,request,format=None):
+            users= User.objects.all()
+            serializers=RegistrationSerializer(users, many=True)
+            return Response(serializers.data)
+
 class NeighborhoodList(APIView):
     serializer_class=NeighbourhoodSerializer    
     # retrieve all objects in the neighbourhood model
