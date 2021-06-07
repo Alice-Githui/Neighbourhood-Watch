@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 class BusinessSerializer(serializers.ModelSerializer):
     class Meta:
         model = Business
-        fields='__all__'
+        exclude =['user', 'neighbourhood']
+        # fields=['name', 'email']
 
 class ProfileSerializer(serializers.ModelSerializer):
     business=BusinessSerializer(many=True, read_only=True)
