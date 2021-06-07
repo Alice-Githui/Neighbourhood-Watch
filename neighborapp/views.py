@@ -7,6 +7,7 @@ from rest_framework import status
 from django.http import Http404
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
