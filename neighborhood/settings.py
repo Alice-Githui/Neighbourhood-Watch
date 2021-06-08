@@ -64,6 +64,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'https://alice-githui.github.io/Neighbourhood-Watch-FE/login',
+)
+
 ROOT_URLCONF = 'neighborhood.urls'
 
 TEMPLATES = [
@@ -162,9 +167,9 @@ MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 
 CORS_ALLOWED_ORIGINS=[
     'http://localhost:4200',
-    # 'https://alice-githui.github.io/Neighbourhood-Watch-FE',
-    'https://alice-githui.github.io',
 ]
+
+
 
 # setting rest-framework authentication
 REST_FRAMEWORK = {
