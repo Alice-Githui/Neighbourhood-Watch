@@ -161,7 +161,8 @@ MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 
 CORS_ALLOWED_ORIGINS=[
-    'http://localhost:4200'
+    'http://localhost:4200',
+    'https://alice-githui.github.io/Neighbourhood-Watch-FE',
 ]
 
 # setting rest-framework authentication
