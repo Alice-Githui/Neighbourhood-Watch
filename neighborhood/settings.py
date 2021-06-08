@@ -66,7 +66,7 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
-    'https://alice-githui.github.io/Neighbourhood-Watch-FE/login',
+    'https://alice-githui.github.io/Neighbourhood-Watch-FE',
 )
 
 ROOT_URLCONF = 'neighborhood.urls'
